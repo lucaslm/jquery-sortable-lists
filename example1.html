@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>jQquery sortable lists example</title>
+
+  <!-- Bootstrap core CSS -->
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      padding: 0!important;
+    }
+
+    body {
+        background-color: #e9ecef;
+    }
+
+    .view-wrapper {
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        top: 56px;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        position: absolute;
+    }
+
+    ul, li {
+        color:#e9ecef;
+        list-style-type: none;
+        border:1px solid #3f3f3f;
+    }
+    ul, #sTree2 {
+        padding:0; background-color:#151515;
+    }
+
+    #sTree2 li, ul#s-l-base li {
+      padding-left:50px;
+      margin:5px; border:1px solid #3f3f3f;
+      background-color:#3f3f3f;
+    }
+
+    li div {
+      padding:7px;
+      background-color:#222;
+    }
+
+    li, ul { border-radius: 3px; }
+  </style>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="jquery-sortable-lists-mobile.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var options = {
+        placeholderCss: {'background-color': '#ff8'},
+        hintCss: {'background-color':'#bbf'},
+        onChange: function( cEl )
+        {
+          console.log( 'onChange' );
+        },
+        complete: function( cEl )
+        {
+          console.log( 'complete' );
+        },
+        isAllowed: function( cEl, hint, target )
+        {
+          // Be carefull if you test some ul/ol elements here.
+          // Sometimes ul/ols are dynamically generated and so they have not some attributes as natural ul/ols.
+          // Be careful also if the hint is not visible. It has only display none so it is at the previous place where it was before(excluding first moves before showing).
+          if( target.data('module') === 'c' && cEl.data('module') !== 'c' )
+          {
+            hint.css('background-color', '#ff9999');
+            return false;
+          }
+          else
+          {
+            hint.css('background-color', '#99ff99');
+            return true;
+          }
+        },
+        opener: {
+          active: true,
+          as: 'html',  // if as is not set plugin uses background image
+          close: '<i class="fa fa-minus c3"></i>',  // or 'fa-minus c3'
+          open: '<i class="fa fa-plus"></i>',  // or 'fa-plus'
+          openerCss: {
+            'display': 'inline-block',
+            //'width': '18px', 'height': '18px',
+            'float': 'left',
+            'margin-left': '-35px',
+            'margin-right': '5px',
+            //'background-position': 'center center', 'background-repeat': 'no-repeat',
+            'font-size': '1.1em'
+          }
+        },
+				scrollElementSelector: '.view-wrapper',
+        ignoreClass: 'clickable'
+      };
+
+      $('#sTree2').sortableLists( options );
+    });
+  </script>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top scrolling-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        Top Fixed Navbar
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent-7">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Left Link 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Left Link 2</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Right Link</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    
+    <div class="view-wrapper">
+      <div class="container">
+        <section>
+          <h1 class="mt-5">Sortable list</h1>
+          <p class="lead">Unless viewing this page on a large device (ie, no overflow), notice how the scrol bar is added to the div.container's parent, not the body element.</p>
+          <p class="lead">Attempting to drag an item outside the clipped area of the scrolling div should make it scroll, but it fails. </p>
+          <ul class="sTree2 listsClass" id="sTree2">
+            <li id="item_a">
+              <div>Item a</div>
+            </li>
+            <li class="s-l-open" id="item_b">
+              <div>Item b</div>
+              <ul class="">
+                <li id="item_b1">
+                  <div>Item b1</div>
+                </li>
+                <li id="item_b2">
+                  <div><span class="clickable">Item b2 - clickable text</span></div>
+                </li>
+                <li id="item_b3">
+                  <div>Item b3</div>
+                </li>
+                <li id="item_b4">
+                  <div>Item b4</div>
+                </li>
+                <li id="item_b5">
+                  <div>Item b5</div>
+                </li>
+              </ul>
+            </li>
+            <li class="s-l-open" id="item_c">
+              <div>Item c - c block disallows inserting items from other blocks</div>
+              <ul class="">
+                <li id="item_c1">
+                  <div>Item c1</div>
+                </li>
+                <li id="item_c2">
+                  <div>Item c2</div>
+                </li>
+                <li id="item_c3">
+                  <div>Item c3</div>
+                </li>
+                <li id="item_c4">
+                  <div>Item c4</div>
+                </li>
+                <li id="item_c5">
+                  <div>Item c5</div>
+                </li>
+              </ul>
+            </li>
+            <li class="s-l-open" id="item_d">
+              <div>Item d</div>
+              <ul class="">
+                <li id="item_d1">
+                  <div>Item d1</div>
+                </li>
+                <li id="item_d2">
+                  <div>Item d2</div>
+                </li>
+                <li id="item_d3">
+                  <div>Item d3</div>
+                </li>
+                <li id="item_d4">
+                  <div>Item d4</div>
+                </li>
+                <li id="item_d5">
+                  <div>Item d5</div>
+                </li>
+              </ul>
+            </li>
+            <li class="" id="item_e">
+              <div>Item e</div>
+            </li>
+            <li class="" id="item_f">
+              <div>Item f</div>
+            </li>
+            <li class="" id="item_g">
+              <div>Item g</div>
+            </li>
+            <li class="" id="item_h">
+              <div>Item h</div>
+            </li>
+          </ul>
+        </section>
+        <hr>
+      </div>
+    </div> <!-- /view-wrapper -->
+
+    
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>jQquery sortable lists example</title>
+
+  <!-- Bootstrap core CSS -->
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body, html {
+      height: 100%;
+      padding: 0!important;
+    }
+
+    body {
+        background-color: #e9ecef;
+    }
+
+    .scroll-element {
+			max-height: 60vh;
+      overflow: auto;
+    }
+
+    .scroll-element-2 {
+			max-height: 110vh;
+			overflow: auto;
+    }
+
+    ul, li {
+        color:#e9ecef;
+        list-style-type: none;
+        border:1px solid #3f3f3f;
+    }
+    ul, #sTree2 {
+        padding:0; background-color:#151515;
+    }
+
+    #sTree2 li, ul#s-l-base li {
+      padding-left:50px;
+      margin:5px; border:1px solid #3f3f3f;
+      background-color:#3f3f3f;
+    }
+
+    li div {
+      padding:7px;
+      background-color:#222;
+    }
+
+    li, ul { border-radius: 10px; }
+  </style>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="jquery-sortable-lists-mobile.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var options = {
+        placeholderCss: {'background-color': '#ff8'},
+        hintCss: {'background-color':'#bbf'},
+        onChange: function( cEl )
+        {
+          console.log( 'onChange' );
+        },
+        complete: function( cEl )
+        {
+          console.log( 'complete' );
+        },
+        isAllowed: function( cEl, hint, target )
+        {
+          // Be carefull if you test some ul/ol elements here.
+          // Sometimes ul/ols are dynamically generated and so they have not some attributes as natural ul/ols.
+          // Be careful also if the hint is not visible. It has only display none so it is at the previous place where it was before(excluding first moves before showing).
+          if( target.data('module') === 'c' && cEl.data('module') !== 'c' )
+          {
+            hint.css('background-color', '#ff9999');
+            return false;
+          }
+          else
+          {
+            hint.css('background-color', '#99ff99');
+            return true;
+          }
+        },
+        opener: {
+          active: true,
+          as: 'html',  // if as is not set plugin uses background image
+          close: '<i class="fa fa-minus c3"></i>',  // or 'fa-minus c3'
+          open: '<i class="fa fa-plus"></i>',  // or 'fa-plus'
+          openerCss: {
+            'display': 'inline-block',
+            //'width': '18px', 'height': '18px',
+            'float': 'left',
+            'margin-left': '-35px',
+            'margin-right': '5px',
+            //'background-position': 'center center', 'background-repeat': 'no-repeat',
+            'font-size': '1.1em'
+          }
+        },
+				scrollElementSelector: '.scroll-element',
+        ignoreClass: 'clickable'
+      };
+
+      $('#sTree2').sortableLists( options );
+    });
+  </script>
+
+</head>
+<body>
+    
+    <div class="container">
+      <h1 class="py-5">Sortable list example<br><small>with nested scrolls</small></h1>
+			<hr/>
+			<div class="scroll-element-2">
+				<p class="lead">Notice how the list is itself inside a div that has it's own scroll bar. </p>
+				<div class="scroll-element">
+					<ul class="sTree2 listsClass" id="sTree2">
+						<li id="item_a">
+							<div>Item a</div>
+						</li>
+						<li class="s-l-open" id="item_b">
+							<div>Item b</div>
+							<ul class="">
+								<li id="item_b1">
+									<div>Item b1</div>
+								</li>
+								<li id="item_b2">
+									<div><span class="clickable">Item b2 - clickable text</span></div>
+								</li>
+								<li id="item_b3">
+									<div>Item b3</div>
+								</li>
+								<li id="item_b4">
+									<div>Item b4</div>
+								</li>
+								<li id="item_b5">
+									<div>Item b5</div>
+								</li>
+							</ul>
+						</li>
+						<li class="s-l-open" id="item_c">
+							<div>Item c - c block disallows inserting items from other blocks</div>
+							<ul class="">
+								<li id="item_c1">
+									<div>Item c1</div>
+								</li>
+								<li id="item_c2">
+									<div>Item c2</div>
+								</li>
+								<li id="item_c3">
+									<div>Item c3</div>
+								</li>
+								<li id="item_c4">
+									<div>Item c4</div>
+								</li>
+								<li id="item_c5">
+									<div>Item c5</div>
+								</li>
+							</ul>
+						</li>
+						<li class="s-l-open" id="item_d">
+							<div>Item d</div>
+							<ul class="">
+								<li id="item_d1">
+									<div>Item d1</div>
+								</li>
+								<li id="item_d2">
+									<div>Item d2</div>
+								</li>
+								<li id="item_d3">
+									<div>Item d3</div>
+								</li>
+								<li id="item_d4">
+									<div>Item d4</div>
+								</li>
+								<li id="item_d5">
+									<div>Item d5</div>
+								</li>
+							</ul>
+						</li>
+						<li class="" id="item_e">
+							<div>Item e</div>
+						</li>
+						<li class="" id="item_f">
+							<div>Item f</div>
+						</li>
+						<li class="" id="item_g">
+							<div>Item g</div>
+						</li>
+						<li class="" id="item_h">
+							<div>Item h</div>
+						</li>
+					</ul>
+				</div>
+				<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc ante. Phasellus luctus lacus tortor, sit amet ornare lorem mattis nec. Vivamus eget nulla ac quam finibus varius at quis urna. Nulla non quam convallis neque convallis tincidunt a et lacus. Vivamus eget condimentum felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent egestas, lacus et vestibulum posuere, ex libero imperdiet enim, vitae rhoncus lorem lectus eget ante. Fusce imperdiet leo vel diam dictum pretium. In hac habitasse platea dictumst.
+				</p>
+				<p>
+				Nam gravida viverra diam, in dictum dui tincidunt id. Vivamus sollicitudin vitae lorem eget placerat. Suspendisse rutrum blandit lacus a dapibus. Aliquam in diam ultricies libero molestie tincidunt nec non justo. Phasellus at leo lorem. Morbi sed dictum magna, non lobortis metus. Integer in elit ipsum. Suspendisse porta venenatis nulla, eu vestibulum nisl mattis sed. Nulla egestas nulla eu iaculis sagittis. Curabitur tristique porttitor sem et aliquam. Curabitur at ex fringilla, auctor lacus nec, elementum quam.
+				</p>
+				<p>
+				Maecenas sed dui vel lacus posuere sodales at a erat. Fusce placerat odio eu sodales porttitor. Donec eleifend volutpat tellus, sed posuere dolor aliquam sed. Donec in nisi laoreet, porttitor orci eget, lacinia est. Nam laoreet nunc nec massa pulvinar mollis. Donec lacinia eros eget mollis auctor. Integer fringilla sem ultrices felis condimentum, vel ullamcorper ipsum vehicula. Suspendisse feugiat tempor elementum.
+				</p>
+				<p>
+				Proin id mi quis sem iaculis interdum pellentesque id magna. Donec non odio neque. Suspendisse pellentesque turpis et iaculis auctor. Nulla nec nibh lectus. Duis turpis arcu, blandit non ornare vitae, gravida vitae purus. In ullamcorper, lectus ac finibus sollicitudin, ligula nisl dapibus quam, in venenatis lorem justo non mi. Quisque varius, augue sit amet congue egestas, metus nunc pulvinar est, vitae pharetra justo nibh quis magna. Quisque sit amet felis vitae lacus pulvinar hendrerit. Phasellus imperdiet, risus quis fermentum tempus, eros diam bibendum sem, nec fringilla quam nisi a nisi. Proin dolor sem, iaculis nec tellus nec, egestas varius mauris. Pellentesque ullamcorper vulputate odio, ac ornare quam consectetur semper. Nullam quis volutpat nulla.
+				</p>
+				<p>
+				Sed congue, leo sed ornare sagittis, nisi tortor facilisis lacus, vitae tincidunt dolor nisl id metus. Sed porttitor, libero in sagittis posuere, tortor enim pellentesque risus, vitae tristique mauris risus ut diam. Suspendisse tortor dolor, interdum eget cursus ut, aliquet a lectus. Donec fringilla odio vitae nisl euismod, ut vestibulum mauris pulvinar. Duis placerat quam sed interdum vehicula. Vestibulum vel dui ligula. Morbi vel interdum lectus, et convallis orci. Nulla ornare urna eget ipsum fringilla, aliquet eleifend lacus scelerisque. Pellentesque aliquet sit amet dolor nec viverra. Nunc venenatis commodo risus, sed ultrices libero volutpat non. Nam molestie est non pellentesque dignissim. Quisque et augue ac eros tempus molestie. Duis molestie, tellus eu laoreet pulvinar, leo urna malesuada ipsum, nec euismod urna metus hendrerit erat. Suspendisse a volutpat nisi.
+				</p>
+			</div>
+    </div> <!-- /container -->
+
+    
+</body>
+</html>
